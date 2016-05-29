@@ -5,6 +5,7 @@ const browserSync     = require('browser-sync');
 const del             = require('del');
 const wiredep         = require('wiredep').stream;
 
+const removeHtmlComments = require('gulp-remove-html-comments');
 const $       = gulpLoadPlugins();
 const reload  = browserSync.reload;
 const ghPages = require('gulp-gh-pages');
@@ -13,6 +14,12 @@ const ghPages = require('gulp-gh-pages');
 gulp.task('deploy', function() {
   return gulp.src('./dist/**/*')
     .pipe(ghPages());
+});
+
+gulp.task('default', function () {
+  return gulp.src('app/*.html')
+    .pipe(removeHtmlComments())
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('styles', () => {
